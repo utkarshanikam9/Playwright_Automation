@@ -32,11 +32,28 @@ test('Browser Context Test',async ({browser})=>{
 });
 
 
-test('Page Test',async ({page})=>{
-    await page.goto('https://google.com');
-    console.log(await page.title());
-    await expect(page).toHaveTitle('Google');
-    // await page.locator('#checkBoxOption1').check().should.be.checked;
-    // await page.locator('#checkBoxOption1').uncheck().should.not.be.checked;
-    // await page.locator('input[type="checkbox"]').check(['option2','option3']);
+test.only('UI Controls',async ({page})=>{
+    const username=page.locator('#username');
+    const password=page.locator("[type='password']");
+    const signInBtn=page.locator('#signInBtn');
+    const dropdown=page.locator('select.form-control');
+
+    await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
+    await username.fill('rahulshettyacademy');
+    await password.fill('Learning@830$3mK2');
+    await dropdown.selectOption('consult');
+    await page.locator('.radiotextsty').last().click();
+    await page.locator('#okayBtn').click();
+    expect(page.locator('.radiotextsty').last()).toBeChecked();
+    console.log(await page.locator('.radiotextsty').last().isChecked());
+
+    await page.locator('#terms').check();
+    expect(page.locator('#terms')).toBeChecked();
+    await page.locator('#terms').uncheck();
+    expect(page.locator('#terms')).not.toBeChecked();
+    console.log(await page.locator('#terms').isChecked());
+
+    // await page.pause();
+    // await signInBtn.click();
+
 });
