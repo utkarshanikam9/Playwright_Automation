@@ -19,6 +19,7 @@ test.only('Assignment 1 Test',async ({page})=>{
     await page.locator('#login').click();
 
     await page.waitForLoadState('networkidle');
+    await page.locator('.card-body b').first().waitFor();
 
     console.log(await page.locator('.card-body b').allTextContents());
 });
