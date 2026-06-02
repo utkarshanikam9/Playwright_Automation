@@ -9,7 +9,7 @@ test.only('Browser Context Test',async ({browser})=>{
     await page.locator("[type='password']").fill('sadsd');
     await page.locator('#signInBtn').click();
     console.log(await page.locator("[style*='block']").textContent());
-    await page.locator("[style*='block']").toContainText("ddd");
+    await expect(page.locator("[style*='block']")).toContainText("Inv");
 
 });
 
