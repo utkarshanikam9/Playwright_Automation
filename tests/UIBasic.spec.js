@@ -37,6 +37,7 @@ test.only('UI Controls',async ({page})=>{
     const password=page.locator("[type='password']");
     const signInBtn=page.locator('#signInBtn');
     const dropdown=page.locator('select.form-control');
+    const documentLink=page.locator('a[href*="documents-request"]');
 
     await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
     await username.fill('rahulshettyacademy');
@@ -53,6 +54,7 @@ test.only('UI Controls',async ({page})=>{
     expect(page.locator('#terms')).not.toBeChecked();
     console.log(await page.locator('#terms').isChecked());
 
+    await expect(documentLink).toHaveAttribute('class','blinkinText');
     // await page.pause();
     // await signInBtn.click();
 
