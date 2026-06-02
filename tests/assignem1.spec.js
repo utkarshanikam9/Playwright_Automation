@@ -20,5 +20,5 @@ test.only('Assignment 1 Test',async ({page})=>{
 
     await page.waitForLoadState('networkidle');
 
-    console.log(await page.locator('.card-body b').nth(0).allTextContents());
+    console.log(await page.locator('.card-body b').allTextContents());
 });
