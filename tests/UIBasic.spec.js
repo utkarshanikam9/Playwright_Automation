@@ -1,12 +1,13 @@
 const {test,expect}= require('@playwright/test');
 
-test.only('Browser Context Test',async ({browser})=>{
+test('Browser Context Test',async ({browser})=>{
     const context = await browser.newContext();
     const page = await context.newPage();
 
     const username=page.locator('#username');
     const password=page.locator("[type='password']");
     const signInBtn=page.locator('#signInBtn');
+    const cardTitles=page.locator('.card-body a');
 
     await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
     console.log(await page.title());
@@ -16,15 +17,20 @@ test.only('Browser Context Test',async ({browser})=>{
     console.log(await page.locator("[style*='block']").textContent());
     // await expect(page.locator("[style*='block']")).toContainText("Inv");
 
+    //4.17
     await username.fill('');
     await password.fill('');
     await username.fill('rahulshettyacademy');
     await password.fill('Learning@830$3mK2');
     await signInBtn.click();
-    console.log(await page.locator('.card-body a').nth(0).textContent());
-    console.log(await page.locator('.card-body a').first().textContent());
+
+    //4.18
+    console.log(await cardTitles.nth(0).textContent());
+    console.log(await cardTitles.first().textContent());
+    console.log(await cardTitles.allTextContents());
     
 });
+
 
 test('Page Test',async ({page})=>{
     await page.goto('https://google.com');
