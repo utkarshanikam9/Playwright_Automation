@@ -18,7 +18,9 @@ test('Assignment 1 Test',async ({page})=>{
     await page.locator('#userPassword').fill('Utkarsha@123');
     await page.locator('#login').click();
 
+    // networks comes idle after login and then we can wait for the elements to be visible
     await page.waitForLoadState('networkidle');
+    // Witfor worked for the one element but not for the second one, so we can use waitFor for the first element and then use it for the second element
     await page.locator('.card-body b').first().waitFor();
 
     console.log(await page.locator('.card-body b').allTextContents());

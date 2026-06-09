@@ -1,4 +1,5 @@
 const {test,expect}= require('@playwright/test');
+const { log } = require('node:console');
 
 test('Browser Context Test',async ({browser})=>{
     const context = await browser.newContext();
@@ -32,7 +33,7 @@ test('Browser Context Test',async ({browser})=>{
 });
 
 
-test.only('UI Controls',async ({page})=>{
+test('UI Controls',async ({page})=>{
     const username=page.locator('#username');
     const password=page.locator("[type='password']");
     const signInBtn=page.locator('#signInBtn');
@@ -57,5 +58,34 @@ test.only('UI Controls',async ({page})=>{
     await expect(documentLink).toHaveAttribute('class','blinkinText');
     // await page.pause();
     // await signInBtn.click();
+
+});
+
+test.only('child window handling',async({browser})=>{
+    
+    const context = await browser.newContext();   
+    const page = await context.newPage();
+    const username=page.locator('#username');
+    
+    await page.goto('https://rahulshettyacademy.com/loginpagePractise/');
+    
+    const documentLink=page.locator('a[href*="documents-request"]');
+    
+    const [newpage] = await Promise.all([
+        context.waitForEvent('page'),
+        documentLink.click()
+    ]);
+
+    const text=await newpage.locator('.red').textContent();
+    
+    const arr=text.split('@');
+    const domain=arr[1].split(' ')[0];
+    console.log(domain);
+
+    newpage.close();
+
+    await username.fill(domain);
+    await page.pause();
+
 
 });
